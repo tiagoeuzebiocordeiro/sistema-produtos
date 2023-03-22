@@ -1,0 +1,8 @@
+com\produto\model\Categoria.class
+com\produto\repository\CategoriaRepository.class
+com\produto\controller\IndexController.class
+com\produto\repository\ProdutoRepository.class
+com\produto\model\Produto.class
+com\produto\controller\CategoriaController.class
+com\produto\ProdutoApplication.class
+com\produto\controller\ProdutoController.class

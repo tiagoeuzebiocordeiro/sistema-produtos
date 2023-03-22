@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Produtos - Edição</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<style>
+
+	.mensagem {
+	
+	color: red;
+	
+	}
+
+</style>
+
+</head>
+<body>
+
+<div th:insert="/fragments/publico-nav :: nav"></div>
+
+<h3 class="container pt-4">Edição de produto</h3>
+
+<div class="container pt-5">
+
+<form th:action="@{/produto/editar/{id}(id=${produto.id})}" th:object="${produto}" method="post">
+
+
+
+	  <div class="form-group row">
+	    <label for="nome" class="col-sm-1 col-form-label">Nome</label> 
+	    <div class="col-4">
+	      <div class="input-group">
+	        <div class="input-group-prepend">
+	          <div class="input-group-text">
+	            <i class="fa fa-archive"></i>
+	          </div>
+	        </div> 
+	        <input id="nome" name="nome" placeholder="Nome do produto" type="text" class="form-control" th:field="*{nome}">
+	     
+	     <div> 
+			<span class="mensagem" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+		</div>
+	     
+	      </div>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="preco" class="col-sm-1 col-form-label">Preço</label> 
+	    <div class="col-4">
+	      <div class="input-group">
+	        <div class="input-group-prepend">
+	          <div class="input-group-text">
+	            <i class="fa fa-money"></i>
+	          </div>
+	        </div> 
+	        <input id="preco" name="preco" placeholder="Preço unitário do produto" type="number" class="form-control" th:field="*{preco}">
+	     
+	      
+	      </div>
+	       <div> 
+			<span class="mensagem" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></span>
+		</div>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="quantidade" class="col-sm-1 col-form-label">Quantidade</label> 
+	    <div class="col-4">
+	      <div class="input-group">
+	        <div class="input-group-prepend">
+	          <div class="input-group-text">
+	            <i class="fa fa-truck"></i>
+	          </div>
+	        </div> 
+	        <input id="quantidade" name="quantidade" placeholder="Quantidade que irá para o estoque" type="number" class="form-control" th:field="*{quantidade}">
+	      
+	      
+	      
+	      </div>
+	      <div> 
+			<span class="mensagem" th:if="${#fields.hasErrors('quantidade')}" th:errors="*{quantidade}"></span>
+		</div>
+	    </div>
+	  </div>
+	  <div class="form-group row">
+	    <label for="descricacao" class="col-sm-1 col-form-label">Descrição</label> 
+	    <div class="col-8">
+	      <textarea id="descricao" name="descricao" cols="40" rows="5" class="form-control" th:field="*{descricao}"></textarea>
+	   <div> 
+			<span class="mensagem" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></span>
+		</div>
+	    </div>
+	  </div>
+			<div class="form-group row">
+				<label for="categoria"  class="col-sm-1 col-form-label">Categoria</label> 
+				
+				<div class="col-4">
+				<select
+					id="categoria" class="form-control" th:field="*{categoria}"
+					th:classappend="${#fields.hasErrors('categoria')} ? 'is-invalid'">
+					<option value="">Selecione</option>
+					<option th:each="c : ${categoria}" th:value="${c.id}"
+						th:text=${c.nome}>Teste</option>
+
+				</select>
+</div>
+			</div>
+			<div class="form-group row">
+	    <div class="offset-4 col-8">
+	      <button name="submit" type="submit" class="btn btn-primary btn-lg">Atualizar</button>
+	       <a class="btn btn-secondary btn-lg" href="/produto/lista">Voltar</a>
+	    </div>
+	  </div> 
+	 
+	</form>
+</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+	
+	
+	<script th:inline="javascript">
+	
+	window.onload = function() {
+	
+	var msg = [[${mensagem}]];
+	
+	toastr.options = {
+			
+				"closeButton": true,
+			  	"debug": false,
+			  	"newestOnTop": false,
+			  	"progressBar": true,
+			  	"positionClass": "toast-top-right",
+			  	"preventDuplicates": false,
+			  	"onclick": null,
+			  	"showDuration": "300",
+			  	"hideDuration": "1000",
+			  	"timeOut": "4000",
+			  	"extendedTimeOut": "1000",
+			  	"showEasing": "swing",
+			  	"hideEasing": "linear",
+			  	"showMethod": "fadeIn",
+			  	"hideMethod": "fadeOut"
+	}
+	
+	if (msg == "Produto cadastrado com sucesso") {
+	
+		Command: toastr.success("Produto cadastrado com sucesso", "Cadastro")
+}
+
+
+
+			
+
+
+}	
+	</script>
+	
+</body>
+</html>
